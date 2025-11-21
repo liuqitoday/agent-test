@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>集装箱装载实施方案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .spec-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .spec-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .spec-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2196f3;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .number {
+            background: #2196f3;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.8em;
+        }
+        
+        .step-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .step-card:hover {
+            border-color: #2196f3;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.2);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-title {
+            font-size: 1.4em;
+            color: #2d3748;
+            font-weight: bold;
+        }
+        
+        .step-content {
+            padding-left: 65px;
+        }
+        
+        .cargo-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .cargo-info h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .cargo-detail {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .cargo-detail-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cargo-detail-item strong {
+            color: #2196f3;
+            margin-right: 5px;
+        }
+        
+        .visual-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .visual-title {
+            font-size: 1.5em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .view-container {
+            margin-bottom: 40px;
+        }
+        
+        .view-label {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .top-view {
+            background: white;
+            border: 3px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        .container-diagram {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 5.08;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #1976d2;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .zone {
+            position: absolute;
+            border: 2px dashed #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: 0.9em;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        .side-view {
+            background: white;
+            border: 3px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        .side-diagram {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4.46;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 2px solid #388e3c;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .layer {
+            position: absolute;
+            border: 2px dashed #333;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 10px;
+            border: 2px solid #333;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .warning-box ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+        
+        .tips-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tips-box h4 {
+            color: #155724;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .tips-box ul {
+            margin-left: 20px;
+            color: #155724;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .summary-table thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .summary-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .summary-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .summary-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .highlight-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e67e22;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 4px solid #2196f3;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .checklist li:before {
+            content: "☐ ";
+            font-size: 1.5em;
+            margin-right: 10px;
+            color: #2196f3;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .step-card {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .dimension-note {
+            background: #fff9c4;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.95em;
+            border: 1px solid #f9a825;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 集装箱装载实施方案</h1>
+            <div class="subtitle">Container Loading Implementation Guide</div>
+            <div class="subtitle" style="margin-top: 10px; font-size: 1em;">详细操作指南 | 可视化布局 | 分步骤实施</div>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="info-box">
+                <h3>🚢 集装箱规格与装载摘要</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">集装箱长度</div>
+                        <div class="spec-value">11.9 m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">集装箱宽度</div>
+                        <div class="spec-value">2.34 m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">集装箱高度</div>
+                        <div class="spec-value">2.67 m</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">总容积</div>
+                        <div class="spec-value">74.35 m³</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">已装载体积</div>
+                        <div class="spec-value">47.33 m³</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">空间利用率</div>
+                        <div class="spec-value">63.7%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 货物清单总览 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">1</span>
+                    货物清单总览
+                </h2>
+                
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>货物名称</th>
+                            <th>单件尺寸 (cm)</th>
+                            <th>数量</th>
+                            <th>总体积 (m³)</th>
+                            <th>颜色标识</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Lyocell</strong></td>
+                            <td>117 × 70 × 110</td>
+                            <td>7 包</td>
+                            <td>6.31</td>
+                            <td><div class="color-box" style="background: #FF6B6B; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Viscose</strong></td>
+                            <td>110 × 110 × 80</td>
+                            <td>2 包</td>
+                            <td>1.94</td>
+                            <td><div class="color-box" style="background: #4ECDC4; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>仿羽绒</strong></td>
+                            <td>130 × 88 × 80</td>
+                            <td>8 包</td>
+                            <td>7.32</td>
+                            <td><div class="color-box" style="background: #45B7D1; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>面料一</strong></td>
+                            <td>220 × 20 × 20 (估算)</td>
+                            <td>71 件</td>
+                            <td>6.50</td>
+                            <td><div class="color-box" style="background: #FFA07A; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>面料二</strong></td>
+                            <td>220 × 20 × 20 (估算)</td>
+                            <td>206 件</td>
+                            <td>18.86</td>
+                            <td><div class="color-box" style="background: #98D8C8; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                        <tr style="background: #fffacd;">
+                            <td><strong>HCS (可选)</strong></td>
+                            <td>130 × 88 × 80</td>
+                            <td><span class="highlight-number">7</span> 包</td>
+                            <td>6.41</td>
+                            <td><div class="color-box" style="background: #F7DC6F; display: inline-block; width: 30px; height: 20px;"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="dimension-note">
+                    <strong>📏 注意：</strong>面料一和面料二由于缺少完整尺寸信息，根据总体积和长度进行了估算。实际装载时请根据实际包装尺寸调整。
+                </div>
+            </div>
+            
+            <!-- 可视化布局图 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">2</span>
+                    可视化装载布局
+                </h2>
+                
+                <div class="visual-container">
+                    <div class="visual-title">集装箱装载布局图</div>
+                    
+                    <!-- 俯视图 -->
+                    <div class="view-container">
+                        <div class="view-label">🔽 俯视图 (Top View) - 从上往下看</div>
+                        <div class="top-view">
+                            <div class="container-diagram">
+                                <!-- 区域1: 面料区（前部） -->
+                                <div class="zone" style="left: 0; top: 0; width: 40%; height: 100%; background: rgba(255, 160, 122, 0.6);">
+                                    <div>
+                                        <div style="font-size: 1.2em;">面料区</div>
+                                        <div style="font-size: 0.8em;">面料一 + 面料二</div>
+                                        <div style="font-size: 0.8em;">277件</div>
+                                        <div style="font-size: 0.7em;">0-4.8m</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 区域2: Lyocell + Viscose（中部） -->
+                                <div class="zone" style="left: 40%; top: 0; width: 25%; height: 100%; background: rgba(255, 107, 107, 0.6);">
+                                    <div>
+                                        <div style="font-size: 1.2em;">棉料区</div>
+                                        <div style="font-size: 0.8em;">Lyocell 7包</div>
+                                        <div style="font-size: 0.8em;">Viscose 2包</div>
+                                        <div style="font-size: 0.7em;">4.8-7.8m</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 区域3: 仿羽绒（中后部） -->
+                                <div class="zone" style="left: 65%; top: 0; width: 18%; height: 100%; background: rgba(69, 183, 209, 0.6);">
+                                    <div>
+                                        <div style="font-size: 1.2em;">仿羽绒区</div>
+                                        <div style="font-size: 0.8em;">8包</div>
+                                        <div style="font-size: 0.7em;">7.8-10m</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 区域4: HCS（后部） -->
+                                <div class="zone" style="left: 83%; top: 0; width: 17%; height: 100%; background: rgba(247, 220, 111, 0.6);">
+                                    <div>
+                                        <div style="font-size: 1.2em;">HCS区</div>
+                                        <div style="font-size: 0.8em;">7包</div>
+                                        <div style="font-size: 0.7em;">10-11.9m</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9em;">
+                                ← 集装箱门口 (0m) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 长度方向 11.9m &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 集装箱内部 (11.9m) →
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 侧视图 -->
+                    <div class="view-container">
+                        <div class="view-label">↔️ 侧视图 (Side View) - 从侧面看</div>
+                        <div class="side-view">
+                            <div class="side-diagram">
+                                <!-- 底层 -->
+                                <div class="layer" style="left: 0; bottom: 0; width: 100%; height: 42%; background: rgba(100, 150, 255, 0.3); border: 2px solid #1976d2;">
+                                    <div>
+                                        <div style="font-size: 1.1em;">底层 (0-1.1m)</div>
+                                        <div style="font-size: 0.8em;">所有货物的主要堆放层</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 中层 -->
+                                <div class="layer" style="left: 0; bottom: 42%; width: 70%; height: 28%; background: rgba(150, 200, 255, 0.3); border: 2px solid #42a5f5;">
+                                    <div>
+                                        <div style="font-size: 1.1em;">中层 (1.1-1.9m)</div>
+                                        <div style="font-size: 0.8em;">部分面料堆叠</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 预留空间 -->
+                                <div class="layer" style="left: 0; bottom: 70%; width: 100%; height: 30%; background: rgba(200, 230, 255, 0.2); border: 2px dashed #90caf9;">
+                                    <div>
+                                        <div style="font-size: 1.1em;">预留空间 (1.9-2.67m)</div>
+                                        <div style="font-size: 0.8em;">可用于通风或额外货物</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9em;">
+                                集装箱高度：2.67m (有效堆放高度建议不超过 2.4m)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 图例 -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #FF6B6B;"></div>
+                            <span>Lyocell (7包)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #4ECDC4;"></div>
+                            <span>Viscose (2包)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #45B7D1;"></div>
+                            <span>仿羽绒 (8包)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #FFA07A;"></div>
+                            <span>面料一 (71件)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #98D8C8;"></div>
+                            <span>面料二 (206件)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box" style="background: #F7DC6F;"></div>
+                            <span>HCS (7包)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 详细装载步骤 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">3</span>
+                    详细装载步骤
+                </h2>
+                
+                <!-- 步骤 1 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div class="step-title">准备工作与安全检查</div>
+                    </div>
+                    <div class="step-content">
+                        <p><strong>操作要点：</strong></p>
+                        <ul class="checklist">
+                            <li>检查集装箱内部是否清洁、干燥，无尖锐物或残留物</li>
+                            <li>确认集装箱尺寸：11.9m × 2.34m × 2.67m</li>
+                            <li>准备必要工具：卷尺、标签、绑带、防护垫</li>
+                            <li>确认所有货物包装完好，标签清晰</li>
+                            <li>准备货物清单，核对数量</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 步骤 2 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div class="step-title">第一阶段：装载面料（前部区域 0-4.8m）</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="cargo-info">
+                            <h4>📦 货物信息</h4>
+                            <div class="cargo-detail">
+                                <div class="cargo-detail-item">
+                                    <strong>面料一：</strong> 71 件
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>面料二：</strong> 206 件
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>估算尺寸：</strong> 220cm × 20cm × 20cm
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>总长度占用：</strong> 约 4.8m
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>装载方法：</strong></p>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li><strong>横向平铺：</strong>从集装箱门口开始，将面料横向（长边2.2m沿集装箱宽度方向）平铺在底部</li>
+                            <li><strong>紧密排列：</strong>面料较薄，可以紧密排列，确保没有大的空隙</li>
+                            <li><strong>分类摆放：</strong>先放面料一（71件），标记清楚位置；然后放面料二（206件）</li>
+                            <li><strong>堆叠高度：</strong>底层放满后可以堆叠第二层，但总高度不超过1.5m</li>
+                            <li><strong>固定：</strong>使用防滑垫或绑带确保面料不会在运输中滑动</li>
+                        </ol>
+                        
+                        <div class="tips-box">
+                            <h4>💡 操作提示</h4>
+                            <ul>
+                                <li>面料较轻，可以多人协作快速装载</li>
+                                <li>建议在每10-20件之间放置标识牌，方便后续清点</li>
+                                <li>注意保持面料包装的整洁，避免磨损</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 步骤 3 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div class="step-title">第二阶段：装载Lyocell和Viscose（中部区域 4.8-7.8m）</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="cargo-info">
+                            <h4>📦 货物信息</h4>
+                            <div class="cargo-detail">
+                                <div class="cargo-detail-item">
+                                    <strong>Lyocell：</strong> 7 包
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>尺寸：</strong> 117cm × 70cm × 110cm
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>Viscose：</strong> 2 包
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>尺寸：</strong> 110cm × 110cm × 80cm
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>装载方法：</strong></p>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li><strong>定位：</strong>从4.8m位置开始（面料区后方）</li>
+                            <li><strong>Lyocell摆放：</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>第一排：横向摆放3包（117cm长边沿宽度方向），占用约70cm长度</li>
+                                    <li>第二排：同样摆放3包，紧邻第一排</li>
+                                    <li>第三排：摆放1包</li>
+                                    <li>总占用长度：约 1.4m (70cm × 2)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Viscose摆放：</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>在Lyocell后方，横向摆放2包</li>
+                                    <li>110cm × 110cm面朝下，占用约1.1m长度</li>
+                                </ul>
+                            </li>
+                            <li><strong>固定：</strong>在货物间放置防护垫，用绑带固定防止移动</li>
+                        </ol>
+                        
+                        <div class="tips-box">
+                            <h4>💡 操作提示</h4>
+                            <ul>
+                                <li>这些货物体积较大且较重，建议使用叉车或手动搬运车</li>
+                                <li>确保货物底部平稳，不要倾斜</li>
+                                <li>货物之间留出少量空隙（1-2cm）便于固定</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 步骤 4 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <div class="step-title">第三阶段：装载仿羽绒（中后部区域 7.8-10m）</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="cargo-info">
+                            <h4>📦 货物信息</h4>
+                            <div class="cargo-detail">
+                                <div class="cargo-detail-item">
+                                    <strong>仿羽绒：</strong> 8 包
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>尺寸：</strong> 130cm × 88cm × 80cm
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>总占用长度：</strong> 约 2.2m
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>装载方法：</strong></p>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li><strong>定位：</strong>从7.8m位置开始（Viscose后方）</li>
+                            <li><strong>摆放方式：</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>第一层：横向摆放4包（130cm长边沿宽度方向）</li>
+                                    <li>排列方式：2包并排，然后再放2包，占用约 1.76m 长度（88cm × 2）</li>
+                                    <li>第二层：在第一层上方堆叠剩余4包，相同排列方式</li>
+                                    <li>总高度：1.6m (80cm × 2层)</li>
+                                </ul>
+                            </li>
+                            <li><strong>稳固性：</strong>确保上下层对齐，重心稳定</li>
+                            <li><strong>固定：</strong>使用绑带将两层固定在一起</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <h4>⚠️ 注意事项</h4>
+                            <ul>
+                                <li>仿羽绒包装可能较软，堆叠时注意不要压得太紧导致变形</li>
+                                <li>确认每包的承重能力，避免底层过度受压</li>
+                                <li>如果包装较软，可以考虑只堆叠一层</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 步骤 5 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <div class="step-title">第四阶段：装载HCS（后部区域 10-11.9m）</div>
+                    </div>
+                    <div class="step-content">
+                        <div class="cargo-info">
+                            <h4>📦 货物信息</h4>
+                            <div class="cargo-detail">
+                                <div class="cargo-detail-item">
+                                    <strong>HCS：</strong> 最多 7 包
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>尺寸：</strong> 130cm × 88cm × 80cm
+                                </div>
+                                <div class="cargo-detail-item">
+                                    <strong>总占用长度：</strong> 约 1.9m
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>装载方法：</strong></p>
+                        <ol style="margin-left: 20px; line-height: 2;">
+                            <li><strong>定位：</strong>从10m位置开始（仿羽绒后方至集装箱尾部）</li>
+                            <li><strong>摆放方式：</strong>
+                                <ul style="margin-left: 20px;">
+                                    <li>采用与仿羽绒相同的摆放方式</li>
+                                    <li>第一层：4包横向摆放</li>
+                                    <li>第二层：3包堆叠（根据实际空间调整）</li>
+                                    <li>利用集装箱尾部的剩余空间（约1.9m）</li>
+                                </ul>
+                            </li>
+                            <li><strong>优化：</strong>可以根据实际剩余空间微调摆放角度</li>
+                            <li><strong>固定：</strong>使用绑带或支撑板固定在集装箱尾部</li>
+                        </ol>
+                        
+                        <div class="tips-box">
+                            <h4>💡 操作提示</h4>
+                            <ul>
+                                <li>HCS是填充剩余空间的货物，可以灵活调整数量</li>
+                                <li>如果前面的货物排列得更紧密，可能可以装入8-9包HCS</li>
+                                <li>优先确保前面的货物装载完成</li>
+                                <li>建议预留少量空间（10-20cm）便于最后的调整和固定</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 步骤 6 -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <div class="step-title">最后检查与固定</div>
+                    </div>
+                    <div class="step-content">
+                        <p><strong>检查清单：</strong></p>
+                        <ul class="checklist">
+                            <li>核对所有货物数量，确认无遗漏</li>
+                            <li>检查货物摆放是否稳固，无倾斜或悬空</li>
+                            <li>确认所有绑带都已正确固定</li>
+                            <li>在货物间隙填充防护材料（泡沫板、纸板等）</li>
+                            <li>检查集装箱门是否可以正常关闭</li>
+                            <li>拍照记录装载情况（从门口、侧面等角度）</li>
+                            <li>填写装载清单，标注各类货物的位置</li>
+                            <li>贴上"小心轻放"、"此面向上"等标识</li>
+                        </ul>
+                        
+                        <div class="tips-box">
+                            <h4>💡 最终提示</h4>
+                            <ul>
+                                <li>确保所有货物的重量分布均匀，避免集装箱一端过重</li>
+                                <li>重要或易碎物品标记清楚</li>
+                                <li>保留装载方案副本，便于卸货时参考</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 装载区域详细说明 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">4</span>
+                    装载区域详细说明
+                </h2>
+                
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>区域</th>
+                            <th>位置范围</th>
+                            <th>货物类型</th>
+                            <th>数量</th>
+                            <th>摆放方式</th>
+                            <th>高度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>区域 A</strong><br>面料区</td>
+                            <td>0m - 4.8m<br>(门口)</td>
+                            <td>面料一 + 面料二</td>
+                            <td>277 件</td>
+                            <td>横向平铺，紧密排列<br>可堆叠2层</td>
+                            <td>≤ 1.5m</td>
+                        </tr>
+                        <tr>
+                            <td><strong>区域 B</strong><br>棉料区</td>
+                            <td>4.8m - 7.8m</td>
+                            <td>Lyocell (7包)<br>Viscose (2包)</td>
+                            <td>9 包</td>
+                            <td>横向摆放<br>3×3排列+2包</td>
+                            <td>1.1m<br>(单层)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>区域 C</strong><br>仿羽绒区</td>
+                            <td>7.8m - 10m</td>
+                            <td>仿羽绒</td>
+                            <td>8 包</td>
+                            <td>横向摆放<br>2×2排列，堆叠2层</td>
+                            <td>1.6m<br>(2层)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>区域 D</strong><br>HCS区</td>
+                            <td>10m - 11.9m<br>(尾部)</td>
+                            <td>HCS</td>
+                            <td>7 包</td>
+                            <td>横向摆放<br>灵活排列</td>
+                            <td>1.6m<br>(2层)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 关键注意事项 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">5</span>
+                    关键注意事项
+                </h2>
+                
+                <div class="warning-box">
+                    <h4>⚠️ 安全警示</h4>
+                    <ul>
+                        <li><strong>重量分布：</strong>确保重货分散放置，避免集中在一端</li>
+                        <li><strong>堆叠高度：</strong>不要超过集装箱高度(2.67m)，建议控制在2.4m以下</li>
+                        <li><strong>固定牢固：</strong>使用足够数量的绑带和防滑垫，防止运输中货物移动</li>
+                        <li><strong>通风：</strong>如果货物需要通风，在顶部预留适当空间</li>
+                        <li><strong>标识清晰：</strong>易碎、重货、方向等标识要明显</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-box">
+                    <h4>💡 优化建议</h4>
+                    <ul>
+                        <li><strong>装载顺序：</strong>按照从前到后、从下到上的顺序装载</li>
+                        <li><strong>空间利用：</strong>小件货物可以填充大件货物之间的空隙</li>
+                        <li><strong>卸货便利：</strong>考虑卸货顺序，先卸的货物放在靠近门口位置</li>
+                        <li><strong>预留空间：</strong>在集装箱顶部和尾部预留10-20cm空间便于调整</li>
+                        <li><strong>拍照记录：</strong>每个阶段完成后拍照，便于追溯和卸货参考</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 快速参考卡 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="number">6</span>
+                    快速参考卡
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="info-box" style="background: #e8f5e9; border-color: #4caf50;">
+                        <h3 style="color: #2e7d32;">✅ 装载成功标准</h3>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>所有货物装入：301件</li>
+                            <li>空间利用率：63.7%</li>
+                            <li>货物无损坏</li>
+                            <li>固定牢靠</li>
+                            <li>标识清晰</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-box" style="background: #fff3e0; border-color: #ff9800;">
+                        <h3 style="color: #e65100;">📞 联系信息</h3>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>装载负责人：_________</li>
+                            <li>电话：_________</li>
+                            <li>紧急联系人：_________</li>
+                            <li>装载日期：_________</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-box" style="background: #fce4ec; border-color: #e91e63;">
+                        <h3 style="color: #c2185b;">🔧 必备工具</h3>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>卷尺</li>
+                            <li>绑带（至少15根）</li>
+                            <li>防滑垫</li>
+                            <li>防护材料</li>
+                            <li>标签和马克笔</li>
+                            <li>相机（拍照记录）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; text-align: center; margin-top: 40px; color: #666;">
+                <p style="font-size: 0.9em;">
+                    <strong>集装箱装载实施方案</strong><br>
+                    生成时间：2025-11-21 | 方案版本：v1.0<br>
+                    此方案基于优化算法生成，实际装载时请根据货物实际尺寸和状态进行调整
+                </p>
+                <p style="margin-top: 15px; font-size: 0.85em;">
+                    建议打印本方案并在装载现场使用 | 装载完成后请拍照存档
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 打印友好性
+        window.onload = function() {
+            console.log('集装箱装载实施方案已加载');
+            
+            // 可以添加交互功能，比如步骤完成标记
+            document.querySelectorAll('.checklist li').forEach(function(item) {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() {
+                    if (this.style.textDecoration === 'line-through') {
+                        this.style.textDecoration = 'none';
+                        this.style.opacity = '1';
+                        this.querySelector('::before') ? null : this.style.color = '';
+                    } else {
+                        this.style.textDecoration = 'line-through';
+                        this.style.opacity = '0.5';
+                    }
+                });
+            });
+        };
+        
+        // 添加打印按钮功能（可选）
+        function printGuide() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
